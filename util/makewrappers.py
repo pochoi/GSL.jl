@@ -560,10 +560,7 @@ def parsefunctions(soup, unknown_handler=['disable', 'report']):
             #add vectorization macro call if applicable
             if do_vectorize > 0:
                 if do_vectorize <= 2:
-                    parsed_out += ['@vectorize_%darg Number ' % do_vectorize + funcname]
-                else:
-                    parsed_out += ['#TODO This vectorization macro is not implemented',
-                                   '#@vectorize_%darg Number ' % do_vectorize + funcname]
+                    parsed_out += ['@dep_vectorize_%darg Number ' % do_vectorize + funcname]
 
             all_parsed_out += ['', '']
             if isDisabled and 'disable' in unknown_handler:
@@ -707,7 +704,7 @@ if __name__ == '__main__':
     for unknown in sorted(list(set(all_unknowns))):
         f.write('type '+unknown.replace(' ','')+'; end\n')
         #Generate pointer types if needed
-        #f.write('typealias '+'p'+unknown+' Ptr{'+unknown+'}\n')
+        #f.write('const '+'p'+unknown+' = Ptr{'+unknown+'}\n')
 
     f.write('\n\n#Automatically generated include list\n')
     #f.write('\n\n'.join(['\nprintln("'+x+'")\ninclude("'+x+'")' for x in filenames]))

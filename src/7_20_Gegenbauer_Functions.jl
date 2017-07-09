@@ -11,40 +11,40 @@ export sf_gegenpoly_1, sf_gegenpoly_2, sf_gegenpoly_3, sf_gegenpoly_1_e,
 
 # These functions evaluate the Gegenbauer polynomials  C^{(\lambda)}_n(x) using
 # explicit representations for n =1, 2, 3.
-# 
+#
 #   Returns: Cdouble
 function sf_gegenpoly_1(lambda::Real, x::Real)
     ccall( (:gsl_sf_gegenpoly_1, libgsl), Cdouble, (Cdouble, Cdouble),
         lambda, x )
 end
-@vectorize_2arg Number sf_gegenpoly_1
+Compat.@dep_vectorize_2arg Number sf_gegenpoly_1
 
 
 # These functions evaluate the Gegenbauer polynomials  C^{(\lambda)}_n(x) using
 # explicit representations for n =1, 2, 3.
-# 
+#
 #   Returns: Cdouble
 function sf_gegenpoly_2(lambda::Real, x::Real)
     ccall( (:gsl_sf_gegenpoly_2, libgsl), Cdouble, (Cdouble, Cdouble),
         lambda, x )
 end
-@vectorize_2arg Number sf_gegenpoly_2
+Compat.@dep_vectorize_2arg Number sf_gegenpoly_2
 
 
 # These functions evaluate the Gegenbauer polynomials  C^{(\lambda)}_n(x) using
 # explicit representations for n =1, 2, 3.
-# 
+#
 #   Returns: Cdouble
 function sf_gegenpoly_3(lambda::Real, x::Real)
     ccall( (:gsl_sf_gegenpoly_3, libgsl), Cdouble, (Cdouble, Cdouble),
         lambda, x )
 end
-@vectorize_2arg Number sf_gegenpoly_3
+Compat.@dep_vectorize_2arg Number sf_gegenpoly_3
 
 
 # These functions evaluate the Gegenbauer polynomials  C^{(\lambda)}_n(x) using
 # explicit representations for n =1, 2, 3.
-# 
+#
 #   Returns: Cint
 function sf_gegenpoly_1_e(lambda::Real, x::Real)
     result = Ref{gsl_sf_result}()
@@ -53,12 +53,12 @@ function sf_gegenpoly_1_e(lambda::Real, x::Real)
     if errno!= 0 throw(GSL_ERROR(errno)) end
     return result[]
 end
-@vectorize_2arg Number sf_gegenpoly_1_e
+Compat.@dep_vectorize_2arg Number sf_gegenpoly_1_e
 
 
 # These functions evaluate the Gegenbauer polynomials  C^{(\lambda)}_n(x) using
 # explicit representations for n =1, 2, 3.
-# 
+#
 #   Returns: Cint
 function sf_gegenpoly_2_e(lambda::Real, x::Real)
     result = Ref{gsl_sf_result}()
@@ -67,12 +67,12 @@ function sf_gegenpoly_2_e(lambda::Real, x::Real)
     if errno!= 0 throw(GSL_ERROR(errno)) end
     return result[]
 end
-@vectorize_2arg Number sf_gegenpoly_2_e
+Compat.@dep_vectorize_2arg Number sf_gegenpoly_2_e
 
 
 # These functions evaluate the Gegenbauer polynomials  C^{(\lambda)}_n(x) using
 # explicit representations for n =1, 2, 3.
-# 
+#
 #   Returns: Cint
 function sf_gegenpoly_3_e(lambda::Real, x::Real)
     result = Ref{gsl_sf_result}()
@@ -81,24 +81,22 @@ function sf_gegenpoly_3_e(lambda::Real, x::Real)
     if errno!= 0 throw(GSL_ERROR(errno)) end
     return result[]
 end
-@vectorize_2arg Number sf_gegenpoly_3_e
+Compat.@dep_vectorize_2arg Number sf_gegenpoly_3_e
 
 
 # These functions evaluate the Gegenbauer polynomial  C^{(\lambda)}_n(x) for a
 # specific value of n, lambda, x subject to \lambda > -1/2,  n >= 0.
-# 
+#
 #   Returns: Cdouble
 function sf_gegenpoly_n(n::Integer, lambda::Real, x::Real)
     ccall( (:gsl_sf_gegenpoly_n, libgsl), Cdouble, (Cint, Cdouble,
         Cdouble), n, lambda, x )
 end
-#TODO This vectorization macro is not implemented
-#@vectorize_3arg Number sf_gegenpoly_n
 
 
 # These functions evaluate the Gegenbauer polynomial  C^{(\lambda)}_n(x) for a
 # specific value of n, lambda, x subject to \lambda > -1/2,  n >= 0.
-# 
+#
 #   Returns: Cint
 function sf_gegenpoly_n_e(n::Integer, lambda::Real, x::Real)
     result = Ref{gsl_sf_result}()
@@ -107,13 +105,11 @@ function sf_gegenpoly_n_e(n::Integer, lambda::Real, x::Real)
     if errno!= 0 throw(GSL_ERROR(errno)) end
     return result[]
 end
-#TODO This vectorization macro is not implemented
-#@vectorize_3arg Number sf_gegenpoly_n_e
 
 
 # This function computes an array of Gegenbauer polynomials  C^{(\lambda)}_n(x)
 # for n = 0, 1, 2, \dots, nmax, subject to \lambda > -1/2,  nmax >= 0.
-# 
+#
 #   Returns: Cint
 function sf_gegenpoly_array(nmax::Integer, lambda::Real, x::Real)
     result_array = Array(Cdouble, nmax+1)
@@ -122,5 +118,3 @@ function sf_gegenpoly_array(nmax::Integer, lambda::Real, x::Real)
     if errno!= 0 throw(GSL_ERROR(errno)) end
     return result_array
 end
-#TODO This vectorization macro is not implemented
-#@vectorize_3arg Number sf_gegenpoly_array
